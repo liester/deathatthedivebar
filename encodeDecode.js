@@ -18,24 +18,13 @@ const convertCharcter = (character, shiftAmount) => {
     }
     return null
 }
-let encode = (message, code)=> {
-    let messageCopyArray = [...message.split('')]
-    let codeIndex = 0
-    messageCopyArray.forEach((element, index) => {
-        const convertedCharacter = convertCharcter(element, code[codeIndex%code.length])
-        if(!!convertedCharacter){
-            messageCopyArray[index] = convertedCharacter
-            codeIndex = codeIndex+1
-        }
-    })
-    return messageCopyArray.join('')
-};
 
-const decode = (message, code) => {
+const cipher = (message, code, direction) => {
     let messageCopyArray = [...message.split('')]
+    let codeCopy = code.map(value => direction == "decode"? value: value*-1)
     let codeIndex = 0
     messageCopyArray.forEach((element, index) => {
-        const convertedCharacter = convertCharcter(element, code[codeIndex%code.length])
+        const convertedCharacter = convertCharcter(element, codeCopy[codeIndex%codeCopy.length])
         if(!!convertedCharacter){
             messageCopyArray[index] = convertedCharacter
             codeIndex = codeIndex+1
@@ -44,6 +33,6 @@ const decode = (message, code) => {
     return messageCopyArray.join('')
 }
 
-console.log(decode(encodedMessageOne, decodeArrayOne))
+console.log(cipher(encodedMessageOne, decodeArrayOne, "decode"))
 
-console.log(decode(encodedMessageTwo, decodeArrayTwo))
+console.log(cipher(encodedMessageTwo, decodeArrayTwo, "decode"))
